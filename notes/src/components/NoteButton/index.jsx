@@ -2,23 +2,9 @@ import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import { format } from "date-fns";
 import "./index.css";
-import { memo, useLayoutEffect, useRef } from "react";
+import { memo } from "react";
 
 function NoteButton({ isActive, onNoteActivated, id, text, filterText, date }) {
-  const noteHeader = useRef();
-
-  useLayoutEffect(() => {
-    if (noteHeader.current) {
-      if (noteHeader.current.scrollWidth > noteHeader.current.clientWidth) {
-        noteHeader.current.classList.add("notes-list__note-header_overflowing");
-      } else {
-        noteHeader.current.classList.remove(
-          "notes-list__note-header_overflowing"
-        );
-      }
-    }
-  }, [text]);
-
   const className = [
     "notes-list__button",
     "notes-list__note",
@@ -32,7 +18,7 @@ function NoteButton({ isActive, onNoteActivated, id, text, filterText, date }) {
       <span className="notes-list__note-meta">
         {format(date, "d MMM yyyy")}
       </span>
-      <span className="notes-list__note-header" ref={noteHeader}>
+      <span className="notes-list__note-header">
         {generateNoteHeader(text, filterText)}
       </span>
     </button>
@@ -58,8 +44,8 @@ function generateNoteHeader(text, filterText) {
     const firstLineParts = firstLine.split(
       new RegExp(
         "(" + filterText.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&") + ")",
-        "gi"
-      )
+        "gi",
+      ),
     );
 
     // This wraps all `filterText` entries with a `del` tag.

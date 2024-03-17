@@ -48,13 +48,10 @@
   display: block;
   white-space: nowrap;
   overflow: hidden;
-}
-
-.notes-list__note-header_overflowing {
   position: relative;
 }
 
-.notes-list__note-header_overflowing::after {
+.notes-list__note-header::after {
   content: "";
   position: absolute;
   right: 0;
